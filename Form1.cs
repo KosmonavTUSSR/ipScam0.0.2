@@ -40,6 +40,22 @@ namespace ipScan
             button3.Enabled = true; //Clear
             
         }
+        public void StartSec()
+        {
+            Process process = new Process();
+            process.StartInfo.FileName = "arp";
+            process.StartInfo.Arguments = "-a";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(866);
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.Start();
+            ipListSec = process.StandardOutput.ReadToEnd();
+            textBox2.Text = ipListSec;
+            timer1.Stop();
+            timer1.Start();
+        }
         public void ClearCash()
         {
             if (checkBox1.Checked)
@@ -62,22 +78,7 @@ namespace ipScan
             Comparison();
             
         }
-        public void StartSec()
-        {
-            Process process = new Process();
-            process.StartInfo.FileName = "arp";
-            process.StartInfo.Arguments = "-a";
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(866);
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.Start();
-            ipListSec = process.StandardOutput.ReadToEnd();
-            textBox2.Text = ipListSec;
-            timer1.Stop();
-            timer1.Start();
-        }
+       
         public void Clear()
         {
             textBox1.Text = "";
@@ -177,18 +178,23 @@ namespace ipScan
             Comparison();
         }
         private void Button2_Click(object sender, EventArgs e)
-        {
+        {   
+            //textBox1.Size = new Size(584, 371);
+            //textBox1.TextAlign = HorizontalAlignment.Left;
             StartSec();
             Comparison();
         }
+        //очистка окон
         private void Button3_Click(object sender, EventArgs e)
         {
             Clear();
         }
+        //Очистка кэша и окон
         private void Button4_Click(object sender, EventArgs e)
         {
             ClearCash();
         }
+        // "Сохранить"
         private void Button5_Click(object sender, EventArgs e)
         {
             SaveFile();
@@ -204,11 +210,11 @@ namespace ipScan
             Size sz = TextRenderer.MeasureText(textBox2.Text, Font);
             textBox2.ScrollBars = sz.Height > textBox2.Height ? ScrollBars.Vertical : ScrollBars.None;
         }
+        // Мой ip
         private void button6_Click(object sender, EventArgs e)
         {
             MyIp();
         }
-
         private void label2_Click(object sender, EventArgs e)
         {
             if (label2.Text != "") {
@@ -220,7 +226,6 @@ namespace ipScan
             timer1.Stop();
             timer1.Start();
         }
-
         private void label3_Click(object sender, EventArgs e)
         {
             if (label3.Text != "")
@@ -243,7 +248,6 @@ namespace ipScan
             timer1.Stop();
             timer1.Start();
         }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = "";

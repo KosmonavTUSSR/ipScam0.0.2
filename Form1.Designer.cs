@@ -75,7 +75,7 @@
             this.textBox1.Location = new System.Drawing.Point(12, 53);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(584, 371);
+            this.textBox1.Size = new System.Drawing.Size(587, 371);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
@@ -104,10 +104,10 @@
             this.textBox2.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox2.Font = new System.Drawing.Font("Cascadia Mono", 11.25F);
             this.textBox2.ForeColor = System.Drawing.Color.AliceBlue;
-            this.textBox2.Location = new System.Drawing.Point(593, 53);
+            this.textBox2.Location = new System.Drawing.Point(595, 53);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(579, 371);
+            this.textBox2.Size = new System.Drawing.Size(577, 371);
             this.textBox2.TabIndex = 3;
             this.textBox2.TextChanged += new System.EventHandler(this.TextBox2_TextChanged);
             // 
@@ -278,7 +278,7 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 2000;
+            this.timer1.Interval = 3000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
