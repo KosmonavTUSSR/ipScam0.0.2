@@ -1,10 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows.Forms;
-using System.Net;
 
 namespace ipScan
 {
@@ -17,8 +17,8 @@ namespace ipScan
         public string locIp;
         public string hostName;
         public string webIp;
-        static public string ipAdr;
-        static public string macAdr;
+        public static string ipAdr;
+        public static string macAdr;
         public Form1()
 
         {
@@ -38,7 +38,7 @@ namespace ipScan
             textBox1.Text = ipList;
             button2.Enabled = true; //Scam+
             button3.Enabled = true; //Clear
-            
+
         }
         public void StartSec()
         {
@@ -56,29 +56,21 @@ namespace ipScan
             timer1.Stop();
             timer1.Start();
         }
+        public void scanImm()
+        {
+            Start();
+
+        }
         public void ClearCash()
         {
-            if (checkBox1.Checked)
-            {
-                Process clear = new Process();
-                clear.StartInfo.FileName = "netsh";
-                clear.StartInfo.Arguments = "interface ip delete arpcache";
-                clear.StartInfo.UseShellExecute = false;
-                clear.StartInfo.CreateNoWindow = true;
-                clear.Start();
-            }
-            if (checkBox2.Checked)
-            {
-                textBox1.Text = "";
-            }
-            if (checkBox3.Checked)
-            {
-                textBox2.Text = "";
-            }
-            Comparison();
-            
+            Process clear = new Process();
+            clear.StartInfo.FileName = "netsh";
+            clear.StartInfo.Arguments = "interface ip delete arpcache";
+            clear.StartInfo.UseShellExecute = false;
+            clear.StartInfo.CreateNoWindow = true;
+            clear.Start();
         }
-       
+
         public void Clear()
         {
             textBox1.Text = "";
@@ -86,22 +78,29 @@ namespace ipScan
             button2.Enabled = false;
             button3.Enabled = false;
             label1.Text = "Данные удалены";
-            label1.ForeColor = Color.FromArgb(255,13,0);
+            label1.ForeColor = Color.FromArgb(255, 13, 0);
             timer1.Stop();
             timer1.Start();
         }
         //Получение ip - new WebClient().DownloadString("http://ipinfo.io/ip")
         //Добавить получение mac
-        //Добавить проверку инетрнета
+        //Добавить проверку инетрнета +
         public void MyIp()
         {
             hostName = System.Net.Dns.GetHostName();
-            label4.Text = "Host - " + hostName;
             System.Net.IPAddress ip = Dns.GetHostEntry(hostName).AddressList[1];
             locIp = ip.ToString();
+            try
+            {
+                webIp = new WebClient().DownloadString("http://ipinfo.io/ip");
+                label3.Text = "Web - " + webIp;
+            }
+            catch
+            {
+                label3.Text = "404 - LOL KEK";
+            }
+            label4.Text = "Host - " + hostName;
             label2.Text = "Local - " + locIp;
-            webIp = new WebClient().DownloadString("http://ipinfo.io/ip");
-            label3.Text = "Web - " + webIp;
         }
         public void SaveFile()
         {
@@ -114,7 +113,7 @@ namespace ipScan
                     File.Exists($@"{savePath}\ipList.txt");
                     if (File.Exists($@"{savePath}\ipList.txt"))
                     {
-                        DialogResult result2 = MessageBox.Show("ipList.txt уже существует \n Заменить?", "Сохранение",
+                        DialogResult result2 = MessageBox.Show("Такой файл уже существует \n Заменить?", "Ошибка",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result2 == DialogResult.Yes)
                         {
@@ -124,9 +123,10 @@ namespace ipScan
                             timer1.Stop();
                             timer1.Start();
                         }
-                        else {
+                        else
+                        {
                             label1.Text = "Операция отменена";
-                            label1.ForeColor = Color.FromArgb(255,13,0);
+                            label1.ForeColor = Color.FromArgb(255, 13, 0);
                             timer1.Stop();
                             timer1.Start();
                         }
@@ -139,15 +139,19 @@ namespace ipScan
                         timer1.Stop();
                         timer1.Start();
                     }
-                }else{
+                }
+                else
+                {
                     label1.Text = "Операция отменена";
                     label1.ForeColor = Color.FromArgb(255, 13, 0);
                     timer1.Stop();
                     timer1.Start();
-                    }
-            } else {
+                }
+            }
+            else
+            {
                 label1.Text = "Нет данных для сохранения";
-                label1.ForeColor = Color.FromArgb(255,13,0);
+                label1.ForeColor = Color.FromArgb(255, 13, 0);
                 timer1.Stop();
                 timer1.Start();
             }
@@ -180,7 +184,7 @@ namespace ipScan
             label5.Text = count.ToString();
         }
         private void Button2_Click(object sender, EventArgs e)
-        {   
+        {
             StartSec();
             Comparison();
         }
@@ -217,7 +221,8 @@ namespace ipScan
         }
         private void label2_Click(object sender, EventArgs e)
         {
-            if (label2.Text != "") {
+            if (label2.Text != "")
+            {
                 Clipboard.SetText(locIp);
                 label1.Text = "Ip Address скопирован";
                 label2.ForeColor = Color.LimeGreen;
@@ -231,10 +236,20 @@ namespace ipScan
         {
             if (label3.Text != "")
             {
-                Clipboard.SetText(webIp);
-                label1.Text = "Web Ip Address скопирован";
-                label3.ForeColor = Color.LimeGreen;
-                label1.ForeColor = Color.LimeGreen;
+                try
+                {
+                    Clipboard.SetText(webIp);
+                    label1.Text = "Web Ip Address скопирован";
+                    label3.ForeColor = Color.LimeGreen;
+                    label1.ForeColor = Color.LimeGreen;
+                }
+                catch
+                {
+                    Clipboard.SetText("404 - LOL KEK");
+                    label1.Text = "Зачем?";
+                    label3.ForeColor = Color.LimeGreen;
+                    label1.ForeColor = Color.LimeGreen;
+                }
             }
             timer1.Stop();
             timer1.Start();
@@ -255,7 +270,6 @@ namespace ipScan
         {
             label1.Text = "";
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             Process clear = new Process();
@@ -264,6 +278,23 @@ namespace ipScan
             clear.StartInfo.UseShellExecute = false;
             clear.StartInfo.CreateNoWindow = true;
             clear.Start();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            Comparison();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = "";
+            Comparison();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            scanImm();
         }
     }
 }
