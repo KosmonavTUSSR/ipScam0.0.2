@@ -5,6 +5,9 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
+using System.Drawing.Text;
+using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace ipScan
 {
@@ -20,10 +23,10 @@ namespace ipScan
         static public string ipAdr;
         static public string macAdr;
         public Form1()
-
         {
             InitializeComponent();
         }
+
         public void Start()
         {
             Process scan = new Process();
@@ -176,7 +179,8 @@ namespace ipScan
         {
             Start();
             Comparison();
-            label5.Text = textBox1.Lines.Length.ToString();
+            int count = textBox1.Lines.Length - 4;
+            label5.Text = count.ToString();
         }
         private void Button2_Click(object sender, EventArgs e)
         {   
@@ -210,11 +214,11 @@ namespace ipScan
             textBox2.ScrollBars = sz.Height > textBox2.Height ? ScrollBars.Vertical : ScrollBars.None;
         }
         // Мой ip
-        private void button6_Click(object sender, EventArgs e)
+        private void Button6_Click(object sender, EventArgs e)
         {
             MyIp();
         }
-        private void label2_Click(object sender, EventArgs e)
+        private void Label2_Click(object sender, EventArgs e)
         {
             if (label2.Text != "") {
                 Clipboard.SetText(locIp);
@@ -225,7 +229,7 @@ namespace ipScan
             timer1.Stop();
             timer1.Start();
         }
-        private void label3_Click(object sender, EventArgs e)
+        private void Label3_Click(object sender, EventArgs e)
         {
             if (label3.Text != "")
             {
@@ -236,7 +240,7 @@ namespace ipScan
             timer1.Stop();
             timer1.Start();
         }
-        private void label4_Click(object sender, EventArgs e)
+        private void Label4_Click(object sender, EventArgs e)
         {
             if (label4.Text != "")
             {
@@ -247,7 +251,7 @@ namespace ipScan
             timer1.Stop();
             timer1.Start();
         }
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = "";
         }
