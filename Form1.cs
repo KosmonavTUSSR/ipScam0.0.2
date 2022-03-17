@@ -1,7 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
@@ -176,7 +176,8 @@ namespace ipScan
         {
             Start();
             Comparison();
-            label5.Text = textBox1.Lines.Length.ToString();
+            int count = textBox1.Lines.Length - 4;
+            label5.Text = count.ToString();
         }
         private void Button2_Click(object sender, EventArgs e)
         {   
@@ -220,7 +221,8 @@ namespace ipScan
                 Clipboard.SetText(locIp);
                 label1.Text = "Ip Address скопирован";
                 label2.ForeColor = Color.LimeGreen;
-                
+                label1.ForeColor = Color.LimeGreen;
+
             }
             timer1.Stop();
             timer1.Start();
@@ -232,6 +234,7 @@ namespace ipScan
                 Clipboard.SetText(webIp);
                 label1.Text = "Web Ip Address скопирован";
                 label3.ForeColor = Color.LimeGreen;
+                label1.ForeColor = Color.LimeGreen;
             }
             timer1.Stop();
             timer1.Start();
@@ -243,6 +246,7 @@ namespace ipScan
                 Clipboard.SetText(hostName);
                 label1.Text = "Host Name скопирован";
                 label4.ForeColor = Color.LimeGreen;
+                label1.ForeColor = Color.LimeGreen;
             }
             timer1.Stop();
             timer1.Start();
