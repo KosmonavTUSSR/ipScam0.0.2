@@ -176,11 +176,10 @@ namespace ipScan
         {
             Start();
             Comparison();
+            label5.Text = textBox1.Lines.Length.ToString();
         }
         private void Button2_Click(object sender, EventArgs e)
         {   
-            //textBox1.Size = new Size(584, 371);
-            //textBox1.TextAlign = HorizontalAlignment.Left;
             StartSec();
             Comparison();
         }
@@ -251,6 +250,16 @@ namespace ipScan
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = "";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Process clear = new Process();
+            clear.StartInfo.FileName = "netsh";
+            clear.StartInfo.Arguments = "interface ip delete arpcache";
+            clear.StartInfo.UseShellExecute = false;
+            clear.StartInfo.CreateNoWindow = true;
+            clear.Start();
         }
     }
 }
