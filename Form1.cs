@@ -173,6 +173,10 @@ namespace ipScan
                 label1.Text = "Данные не совпадают";
 
             }
+            if (textBox1.Text != "" )
+            {
+                button7.Visible = true;
+            }
             timer1.Stop();
             timer1.Start();
         }
@@ -208,6 +212,7 @@ namespace ipScan
         {
             Size sz = TextRenderer.MeasureText(textBox1.Text, Font);
             textBox1.ScrollBars = sz.Height > textBox1.Height ? ScrollBars.Vertical : ScrollBars.None;
+
         }
         private void TextBox2_TextChanged(object sender, EventArgs e)
         {
