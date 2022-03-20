@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ipScan
@@ -19,6 +21,8 @@ namespace ipScan
         public string webIp;
         public static string ipAdr;
         public static string macAdr;
+   
+        string er404 = "404 - LOL KEK";
         public Form1()
 
         {
@@ -53,8 +57,6 @@ namespace ipScan
             process.Start();
             ipListSec = process.StandardOutput.ReadToEnd();
             textBox2.Text = ipListSec;
-            timer1.Stop();
-            timer1.Start();
         }
         public void scanImm()
         {
@@ -79,12 +81,9 @@ namespace ipScan
             button3.Enabled = false;
             label1.Text = "Данные удалены";
             label1.ForeColor = Color.FromArgb(255, 13, 0);
-            timer1.Stop();
-            timer1.Start();
         }
         //Получение ip - new WebClient().DownloadString("http://ipinfo.io/ip")
-        //Добавить получение mac
-        //Добавить проверку инетрнета +
+        //Поправить регулярыне выражение на :
         public void MyIp()
         {
             hostName = System.Net.Dns.GetHostName();
@@ -97,10 +96,28 @@ namespace ipScan
             }
             catch
             {
-                label3.Text = "404 - LOL KEK";
+                label3.Text = er404;
             }
             label4.Text = "Host - " + hostName;
             label2.Text = "Local - " + locIp;
+            string GetMACAddress()
+            {
+                NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+                string macAdr = string.Empty;
+                foreach (NetworkInterface adapter in nics)
+                {
+                    if (macAdr == string.Empty)//   Считывает только первую строку mac
+                    {
+                        IPInterfaceProperties properties = adapter.GetIPProperties();
+                        macAdr = adapter.GetPhysicalAddress().ToString();
+                    }
+                }
+                return macAdr;
+            }
+            string oldmacAdr = GetMACAddress();
+            macAdr = Regex.Replace(oldmacAdr, ".{2}", "$0:");
+
+            label6.Text = macAdr;
         }
         public void SaveFile()
         {
@@ -120,15 +137,11 @@ namespace ipScan
                             File.WriteAllText($@"{savePath}\ipList.txt", textBox1.Text + textBox2.Text);
                             label1.Text = "Данные сохранены";
                             label1.ForeColor = Color.LimeGreen;
-                            timer1.Stop();
-                            timer1.Start();
                         }
                         else
                         {
                             label1.Text = "Операция отменена";
                             label1.ForeColor = Color.FromArgb(255, 13, 0);
-                            timer1.Stop();
-                            timer1.Start();
                         }
                     }
                     else
@@ -136,24 +149,18 @@ namespace ipScan
                         File.WriteAllText($@"{savePath}\ipList.txt", textBox1.Text + textBox2.Text);
                         label1.Text = "Данные сохранены";
                         label1.ForeColor = Color.LimeGreen;
-                        timer1.Stop();
-                        timer1.Start();
                     }
                 }
                 else
                 {
                     label1.Text = "Операция отменена";
                     label1.ForeColor = Color.FromArgb(255, 13, 0);
-                    timer1.Stop();
-                    timer1.Start();
                 }
             }
             else
             {
                 label1.Text = "Нет данных для сохранения";
                 label1.ForeColor = Color.FromArgb(255, 13, 0);
-                timer1.Stop();
-                timer1.Start();
             }
         }
         public void Comparison()
@@ -177,8 +184,16 @@ namespace ipScan
             {
                 button7.Visible = true;
             }
-            timer1.Stop();
-            timer1.Start();
+            
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Process clear = new Process();
+            clear.StartInfo.FileName = "netsh";
+            clear.StartInfo.Arguments = "interface ip delete arpcache";
+            clear.StartInfo.UseShellExecute = false;
+            clear.StartInfo.CreateNoWindow = true;
+            clear.Start();
         }
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -201,11 +216,16 @@ namespace ipScan
         private void Button4_Click(object sender, EventArgs e)
         {
             ClearCash();
+            label1.Text = "ARP cash очищен";
         }
         // "Сохранить"
         private void Button5_Click(object sender, EventArgs e)
         {
             SaveFile();
+        }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            MyIp();
         }
         // Cкролбары
         private void TextBox1_TextChanged(object sender, EventArgs e)
@@ -220,10 +240,7 @@ namespace ipScan
             textBox2.ScrollBars = sz.Height > textBox2.Height ? ScrollBars.Vertical : ScrollBars.None;
         }
         // Мой ip
-        private void button6_Click(object sender, EventArgs e)
-        {
-            MyIp();
-        }
+        
         private void label2_Click(object sender, EventArgs e)
         {
             if (label2.Text != "")
@@ -234,8 +251,6 @@ namespace ipScan
                 label1.ForeColor = Color.LimeGreen;
 
             }
-            timer1.Stop();
-            timer1.Start();
         }
         private void label3_Click(object sender, EventArgs e)
         {
@@ -250,14 +265,12 @@ namespace ipScan
                 }
                 catch
                 {
-                    Clipboard.SetText("404 - LOL KEK");
+                    Clipboard.SetText(er404);
                     label1.Text = "Зачем?";
                     label3.ForeColor = Color.LimeGreen;
                     label1.ForeColor = Color.LimeGreen;
                 }
             }
-            timer1.Stop();
-            timer1.Start();
         }
         private void label4_Click(object sender, EventArgs e)
         {
@@ -268,38 +281,39 @@ namespace ipScan
                 label4.ForeColor = Color.LimeGreen;
                 label1.ForeColor = Color.LimeGreen;
             }
-            timer1.Stop();
-            timer1.Start();
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = "";
         }
-        private void Form1_Load(object sender, EventArgs e)
+       
+        private void label6_Click(object sender, EventArgs e)
         {
-            Process clear = new Process();
-            clear.StartInfo.FileName = "netsh";
-            clear.StartInfo.Arguments = "interface ip delete arpcache";
-            clear.StartInfo.UseShellExecute = false;
-            clear.StartInfo.CreateNoWindow = true;
-            clear.Start();
+            if (label6.Text != "")
+            {
+                Clipboard.SetText(macAdr);
+                label1.Text = "MAC-адрес скопирован";
+                label6.ForeColor = Color.LimeGreen;
+                label1.ForeColor = Color.LimeGreen;
+            }
         }
-
         private void button7_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
-            Comparison();
+            label1.Text = "Главный блок очищен";
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             textBox2.Text = "";
-            Comparison();
+            label1.Text = "Блок очищен";
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void label1_TextChanged(object sender, EventArgs e)
         {
-            scanImm();
+            timer1.Stop();
+            timer1.Start();
         }
+
     }
 }

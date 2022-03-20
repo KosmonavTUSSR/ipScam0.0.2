@@ -51,7 +51,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>78275160-3b524d80-74df-11ea-9360-adfaf8ac375f.ico</ApplicationIcon>
+    <ApplicationIcon>ipscam.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -102,9 +102,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="78275160-3b524d80-74df-11ea-9360-adfaf8ac375f.ico" />
-    <Content Include="78299686-54212a00-7504-11ea-8985-6b80f37d9ed3.ico" />
-    <Content Include="picture_compress.ico" />
+    <Content Include="ipscam.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
