@@ -48,6 +48,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // button1
@@ -146,7 +147,7 @@
             this.label2.Size = new System.Drawing.Size(230, 20);
             this.label2.TabIndex = 4;
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // button4
             // 
@@ -197,7 +198,7 @@
             this.button6.TabIndex = 0;
             this.button6.Text = "MyIP";
             this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button6.Click += new System.EventHandler(this.Button6_Click);
             // 
             // label1
             // 
@@ -213,7 +214,7 @@
             this.label1.Size = new System.Drawing.Size(287, 25);
             this.label1.TabIndex = 4;
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.TextChanged += new System.EventHandler(this.label1_TextChanged);
+            this.label1.TextChanged += new System.EventHandler(this.Label1_TextChanged);
             // 
             // label3
             // 
@@ -227,7 +228,7 @@
             this.label3.Size = new System.Drawing.Size(230, 20);
             this.label3.TabIndex = 4;
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.label3.Click += new System.EventHandler(this.Label3_Click);
             // 
             // label4
             // 
@@ -241,12 +242,12 @@
             this.label4.Size = new System.Drawing.Size(230, 20);
             this.label4.TabIndex = 4;
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // timer1
             // 
             this.timer1.Interval = 2000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // label5
             // 
@@ -277,7 +278,7 @@
             this.button7.Size = new System.Drawing.Size(25, 25);
             this.button7.TabIndex = 0;
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.Click += new System.EventHandler(this.Button7_Click);
             // 
             // button8
             // 
@@ -294,7 +295,7 @@
             this.button8.Size = new System.Drawing.Size(25, 25);
             this.button8.TabIndex = 0;
             this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.button8.Click += new System.EventHandler(this.Button8_Click);
             // 
             // button9
             // 
@@ -324,7 +325,19 @@
             this.label6.Size = new System.Drawing.Size(230, 20);
             this.label6.TabIndex = 4;
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.label6.Click += new System.EventHandler(this.Label6_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.AccessibleDescription = "Сканирование2";
+            this.progressBar1.AccessibleName = "Сканирование";
+            this.progressBar1.Location = new System.Drawing.Point(16, 442);
+            this.progressBar1.MarqueeAnimationSpeed = 999;
+            this.progressBar1.Maximum = 254;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(337, 34);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 5;
             // 
             // Form1
             // 
@@ -334,6 +347,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(38)))), ((int)(((byte)(56)))));
             this.ClientSize = new System.Drawing.Size(1184, 664);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label1);
@@ -384,6 +398,7 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

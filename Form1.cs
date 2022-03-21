@@ -21,8 +21,8 @@ namespace ipScan
         public string webIp;
         public static string ipAdr;
         public static string macAdr;
-   
-        string er404 = "404 - LOL KEK";
+        readonly string er404 = "404 - LOL KEK";
+        string[] Pscan = new string[254];
         public Form1()
 
         {
@@ -30,6 +30,18 @@ namespace ipScan
         }
         public void Start()
         {
+            for (int i = 1; i < 255; i++)
+            {
+                Process pscan = new Process();
+                pscan.StartInfo.FileName = "ping";
+                pscan.StartInfo.Arguments = $" -w 150 -n 3 192.168.1.{i}";
+                pscan.StartInfo.UseShellExecute = false;
+                pscan.StartInfo.CreateNoWindow = true;
+                pscan.Start();
+                progressBar1.Value = +i;
+                progressBar1.BackColor = Color.RosyBrown;
+            }
+            
             Process scan = new Process();
             scan.StartInfo.FileName = "arp";
             scan.StartInfo.Arguments = "-a";
@@ -58,7 +70,7 @@ namespace ipScan
             ipListSec = process.StandardOutput.ReadToEnd();
             textBox2.Text = ipListSec;
         }
-        public void scanImm()
+        public void ScanImm()
         {
             Start();
 
@@ -223,7 +235,7 @@ namespace ipScan
         {
             SaveFile();
         }
-        private void button6_Click(object sender, EventArgs e)
+        private void Button6_Click(object sender, EventArgs e)
         {
             MyIp();
         }
@@ -241,7 +253,7 @@ namespace ipScan
         }
         // Мой ip
         
-        private void label2_Click(object sender, EventArgs e)
+        private void Label2_Click(object sender, EventArgs e)
         {
             if (label2.Text != "")
             {
@@ -252,7 +264,7 @@ namespace ipScan
 
             }
         }
-        private void label3_Click(object sender, EventArgs e)
+        private void Label3_Click(object sender, EventArgs e)
         {
             if (label3.Text != "")
             {
@@ -272,7 +284,7 @@ namespace ipScan
                 }
             }
         }
-        private void label4_Click(object sender, EventArgs e)
+        private void Label4_Click(object sender, EventArgs e)
         {
             if (label4.Text != "")
             {
@@ -282,12 +294,12 @@ namespace ipScan
                 label1.ForeColor = Color.LimeGreen;
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             label1.Text = "";
         }
        
-        private void label6_Click(object sender, EventArgs e)
+        private void Label6_Click(object sender, EventArgs e)
         {
             if (label6.Text != "")
             {
@@ -297,19 +309,19 @@ namespace ipScan
                 label1.ForeColor = Color.LimeGreen;
             }
         }
-        private void button7_Click(object sender, EventArgs e)
+        private void Button7_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
             label1.Text = "Главный блок очищен";
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void Button8_Click(object sender, EventArgs e)
         {
             textBox2.Text = "";
             label1.Text = "Блок очищен";
         }
 
-        private void label1_TextChanged(object sender, EventArgs e)
+        private void Label1_TextChanged(object sender, EventArgs e)
         {
             timer1.Stop();
             timer1.Start();
