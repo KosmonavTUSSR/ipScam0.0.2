@@ -28,20 +28,24 @@ namespace ipScan
         {
             InitializeComponent();
         }
+        void AnyIP(string ip)
+        {
+            Process pscan = new Process();
+            pscan.StartInfo.FileName = "ping";
+            pscan.StartInfo.Arguments = $" -w 150 -n 3 {ip}";
+            pscan.StartInfo.UseShellExecute = false;
+            pscan.StartInfo.CreateNoWindow = true;
+            pscan.Start();
+        }
         public void Start()
         {
             for (int i = 1; i < 255; i++)
             {
-                Process pscan = new Process();
-                pscan.StartInfo.FileName = "ping";
-                pscan.StartInfo.Arguments = $" -w 150 -n 3 192.168.1.{i}";
-                pscan.StartInfo.UseShellExecute = false;
-                pscan.StartInfo.CreateNoWindow = true;
-                pscan.Start();
+                AnyIP($"192.168.1.{i}");
                 progressBar1.Value = +i;
                 progressBar1.BackColor = Color.RosyBrown;
             }
-            
+
             Process scan = new Process();
             scan.StartInfo.FileName = "arp";
             scan.StartInfo.Arguments = "-a";
@@ -192,11 +196,11 @@ namespace ipScan
                 label1.Text = "Данные не совпадают";
 
             }
-            if (textBox1.Text != "" )
+            if (textBox1.Text != "")
             {
                 button7.Visible = true;
             }
-            
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -252,7 +256,7 @@ namespace ipScan
             textBox2.ScrollBars = sz.Height > textBox2.Height ? ScrollBars.Vertical : ScrollBars.None;
         }
         // Мой ip
-        
+
         private void Label2_Click(object sender, EventArgs e)
         {
             if (label2.Text != "")
@@ -298,7 +302,7 @@ namespace ipScan
         {
             label1.Text = "";
         }
-       
+
         private void Label6_Click(object sender, EventArgs e)
         {
             if (label6.Text != "")
